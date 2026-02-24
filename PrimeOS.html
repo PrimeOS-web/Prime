@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeOS - Sistema Operativo Optimizado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de color y fuentes */
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #00c853;
+            --dark: #202124;
+            --light: #f8f9fa;
+            --gray: #5f6368;
+            --light-gray: #e8eaed;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 12px;
+            --glow: 0 0 20px rgba(26, 115, 232, 0.3);
+        }
+
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            text-align: center;
+            color: var(--primary);
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: var(--primary);
+            padding: 14px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: var(--light-gray);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #00a844;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+
+        .download-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tag-arch,
+        .tag-size {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .tag-arch {
+            background: #e3f2fd;
+            color: var(--primary);
+        }
+
+        .tag-size {
+            background: #e8f5e9;
+            color: var(--secondary);
+        }
+
+        .btn-download {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-download:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+        }
+
+        /* Requisitos del Sistema - ACTUALIZADO */
+        .requirements-container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            max-width: 900px;
+            margin: 0 auto;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .requirements-container h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .requirements-wrapper {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .requirement-col {
+            text-align: left;
+        }
+
+        .req-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .req-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .req-header h4 {
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .req-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .req-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            color: var(--gray);
+            font-size: 0.95rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .req-list li:last-child {
+            border-bottom: none;
+        }
+
+        .req-list li i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .req-list li strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .requirement-divider {
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, #ddd, transparent);
+            height: 100%;
+            min-height: 200px;
+        }
+
+        /* Header y navegación */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+
+        .logo:hover i {
+            transform: rotate(360deg);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 1.05rem;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover:before {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Hero section - PANTALLA COMPLETA */
+        .hero {
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 50%, #00c853 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="60" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: 100px 100px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        /* Hero layout de dos columnas */
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            min-height: 100vh;
+            padding: 100px 0;
+        }
+
+        .hero-text {
+            text-align: left;
+            animation: fadeInUp 1s ease;
+        }
+
+        .logo-hero {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .logo-hero i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            animation: fadeInUp 1s ease 0.1s both;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 0 40px 0;
+            color: rgba(255, 255, 255, 0.95);
+            animation: fadeInUp 1s ease 0.2s both;
+            text-align: left;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .tag:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Terminal y stats */
+        .hero-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .terminal-window {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+            transition: var(--transition);
+        }
+
+        .terminal-window:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+        }
+
+        .terminal-header {
+            background: #323232;
+            padding: 12px 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .terminal-btn:hover {
+            transform: scale(1.3);
+        }
+
+        .terminal-btn.red {
+            background: #ff5f56;
+        }
+
+        .terminal-btn.yellow {
+            background: #ffbd2e;
+        }
+
+        .terminal-btn.green {
+            background: #27ca3f;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .terminal-line {
+            color: #4caf50;
+            opacity: 0;
+            animation: typing 0.5s ease forwards;
+        }
+
+        .terminal-line:nth-child(1) {
+            animation-delay: 0.5s;
+        }
+
+        .terminal-line:nth-child(2) {
+            animation-delay: 0.7s;
+        }
+
+        .terminal-line:nth-child(3) {
+            animation-delay: 0.9s;
+        }
+
+        .terminal-line:nth-child(4) {
+            animation-delay: 1.1s;
+        }
+
+        .terminal-line:nth-child(5) {
+            animation-delay: 1.3s;
+        }
+
+        .terminal-line:nth-child(6) {
+            animation-delay: 1.5s;
+        }
+
+        .terminal-line:nth-child(7) {
+            animation-delay: 1.7s;
+        }
+
+        .terminal-line.command {
+            color: #64b5f6;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes typing {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 200, 83, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        /* About section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .about-text p:hover {
+            color: var(--dark);
+            transform: translateX(5px);
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--border-radius);
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .about-image:hover {
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .about-image:before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(255, 255, 255, 0.05) 10px,
+                    rgba(255, 255, 255, 0.05) 20px);
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .about-image .os-preview {
+            background: white;
+            border-radius: 10px;
+            width: 80%;
+            height: 70%;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .about-image:hover .os-preview {
+            transform: translateZ(20px);
+        }
+
+        /* Features section */
+        .features {
+            background: #f5f7fa;
+            position: relative;
+        }
+
+        .features:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, white, transparent);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+        }
+
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(26, 115, 232, 0.1), transparent);
+            transition: left 0.7s;
+        }
+
+        .feature-card:hover:before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 2rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: var(--glow);
+        }
+
+        .feature-icon:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover .feature-icon:after {
+            opacity: 1;
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Technical Details */
+        .details-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 60px;
+        }
+
+        .specs-list {
+            list-style: none;
+        }
+
+        .specs-list li {
+            margin-bottom: 25px;
+            padding-left: 35px;
+            position: relative;
+            transition: var(--transition);
+            padding: 15px 15px 15px 50px;
+            border-radius: 8px;
+            cursor: default;
+        }
+
+        .specs-list li:hover {
+            background: rgba(26, 115, 232, 0.05);
+            transform: translateX(10px);
+        }
+
+        .specs-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25px;
+            height: 25px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .specs-list li:hover:before {
+            transform: translateY(-50%) scale(1.2);
+            box-shadow: 0 0 10px rgba(0, 200, 83, 0.5);
+        }
+
+        .architecture-diagram {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            transition: var(--transition);
+        }
+
+        .architecture-diagram:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .architecture-diagram h3 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .layer {
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .layer-1 {
+            background: var(--primary);
+            color: white;
+        }
+
+        .layer-2 {
+            background: #5c6bc0;
+            color: white;
+        }
+
+        .layer-3 {
+            background: #7986cb;
+            color: white;
+        }
+
+        .layer-4 {
+            background: #9fa8da;
+            color: var(--dark);
+        }
+
+        .layer-5 {
+            background: #c5cae9;
+            color: var(--dark);
+        }
+
+        .layer:hover {
+            filter: brightness(1.1);
+        }
+
+        /* Downloads section */
+        .downloads {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eaed 100%);
+            text-align: center;
+            position: relative;
+        }
+
+        .downloads:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+        }
+
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        .download-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .download-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .download-card.featured {
+            transform: scale(1.05);
+            border-color: var(--secondary);
+            background: linear-gradient(135deg, white 0%, #f0f9ff 100%);
+        }
+
+        .download-card.featured:hover {
+            transform: scale(1.05) translateY(-15px);
+        }
+
+        .download-card.featured:before {
+            content: 'RECOMENDADO';
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 40px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-card .btn {
+            margin-top: 20px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card .btn:after {
+            content: '→';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .download-card:hover .btn:after {
+            opacity: 1;
+            right: 15px;
+        }
+
+        .download-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .download-card:hover .download-icon {
+            transform: scale(1.2) rotate(-10deg);
+            color: var(--secondary);
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .requirement-box {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .requirement-box:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .requirement-box h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .requirement-box ul {
+            list-style: none;
+            color: var(--gray);
+        }
+
+        .requirement-box li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .requirement-box li:before {
+            content: '•';
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .requirement-box li:hover {
+            color: var(--dark);
+            transform: translateX(5px);
+        }
+
+        /* Thesis info */
+        .thesis-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .thesis-text p {
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .thesis-text p:hover {
+            border-left-color: var(--primary);
+            padding-left: 30px;
+            background: linear-gradient(90deg, rgba(26, 115, 232, 0.05), transparent);
+        }
+
+        .thesis-image {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--border-radius);
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thesis-image:before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(255, 255, 255, 0.1) 20px,
+                    rgba(255, 255, 255, 0.1) 40px);
+            animation: slideDiagonal 10s linear infinite;
+        }
+
+        @keyframes slideDiagonal {
+            0% {
+                transform: translate(-50px, -50px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .thesis-image:hover {
+            transform: perspective(1000px) rotateY(5deg) rotateX(-5deg);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .thesis-image>div {
+            position: relative;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .thesis-image:hover>div {
+            transform: scale(1.1);
+        }
+
+        /* Contact section */
+        .contact {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(26, 115, 232, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .contact h2 {
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact h2:after {
+            background: var(--secondary);
+        }
+
+        .contact p {
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: var(--transition);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.2) rotate(360deg);
+            background: var(--secondary);
+            box-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links a:hover {
+            color: white;
+            background: var(--primary);
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 0 0 20px rgba(26, 115, 232, 0.5);
+        }
+
+        /* Responsive design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            h2 {
+                font-size: 2.3rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .hero-text {
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+                text-align: center;
+            }
+
+            .hero p {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .hero-tags {
+                justify-content: center;
+            }
+
+            .terminal-window {
+                transform: none;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content,
+            .thesis-content,
+            .details-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image,
+            .thesis-image {
+                height: 300px;
+                order: -1;
+            }
+
+            .download-card.featured {
+                transform: scale(1);
+            }
+
+            .download-card.featured:hover {
+                transform: scale(1) translateY(-15px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(-10px);
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                display: flex;
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .requirements-wrapper {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .requirement-divider {
+                display: none;
+            }
+
+            .requirements-container {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .feature-card,
+            .download-card {
+                padding: 30px 20px;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header y navegación -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-microchip"></i>
+                    <span>PrimeOS</span>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#acerca">Acerca de</a></li>
+                    <li><a href="#caracteristicas">Características</a></li>
+                    <li><a href="#detalles">Detalles Técnicos</a></li>
+                    <li><a href="#descargas">Descargas</a></li>
+                    <li><a href="#tesis">Tesis</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sección Hero - PANTALLA COMPLETA -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="logo-hero">
+                        <i class="fas fa-microchip"></i>
+                        <span>PrimeOS</span>
+                    </div>
+                    <h1>Sistema Operativo<br>De Alto Rendimiento</h1>
+                    <p>Diseñado para maximizar la eficiencia de recursos y proporcionar una experiencia fluida en
+                        hardware moderno y antiguo.</p>
+                    <div class="hero-btns">
+                        <a href="#descargas" class="btn"><i class="fas fa-download"></i> Descargar PrimeOS</a>
+                        <a href="#tesis" class="btn btn-outline">Ver Descripción</a>
+                    </div>
+                    <div class="hero-tags">
+                        <span class="tag">Windows 10 Base</span>
+                        <span class="tag">WIndows 10 22H2</span>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-btn red"></div>
+                            <div class="terminal-btn yellow"></div>
+                            <div class="terminal-btn green"></div>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line command">$ primeos --status</div>
+                            <div class="terminal-line">Sistema: PrimeOS v1.0</div>
+                            <div class="terminal-line">Kernel: PrimeKernel 5.15.0</div>
+                            <div class="terminal-line">Uso de RAM: 550MB/ 2GB (30%)</div>
+                            <div class="terminal-line">Uso Mínimo de CPU: 1%</div>
+                            <div class="terminal-line">Tiempo activo: 7d 3h 45m</div>
+                            <div class="terminal-line command blink">$ _</div>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-number">45%</div>
+                            <div class="stat-label">Más Rápido</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">70%</div>
+                            <div class="stat-label">Menos RAM</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">99%</div>
+                            <div class="stat-label">Eficiencia</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Acerca de -->
+    <section id="acerca">
+        <div class="container">
+            <h2>Acerca de PrimeOS</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>PrimeOS es un sistema operativo optimizado.
+                        Este sistema ha sido diseñado en base a la versión de Windows 10 22H2
+                        con un enfoque en la eficiencia de recursos, velocidad de ejecución y estabilidad.</p>
+                    <p>El objetivo principal de PrimeOS es ofrecer una alternativa ligera a los sistemas operativos
+                        convencionales,
+                        optimizando cada capa del software para maximizar el rendimiento en una amplia gama de hardware.
+                    </p>
+                    <p>He implementado algoritmos de planificación personalizados, un sistema de archivos optimizado y
+                        un kernel modular que permite una adaptación precisa a las necesidades específicas del usuario.
+                    </p>
+                    <a href="#detalles" class="btn">Ver Detalles Técnicos</a>
+                </div>
+                <div class="about-image">
+                    <div class="os-preview">
+                        <div style="display: flex; flex-direction: column; height: 100%;">
+                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                                <div
+                                    style="width: 20px; height: 20px; background: #ff5f56; border-radius: 50%; margin-right: 10px; transition: all 0.3s;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; background: #ffbd2e; border-radius: 50%; margin-right: 10px; transition: all 0.3s;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; background: #27ca3f; border-radius: 50%; transition: all 0.3s;">
+                                </div>
+                            </div>
+                            <div
+                                style="flex-grow: 1; background: #f5f5f5; border-radius: 5px; padding: 15px; font-family: monospace; overflow: hidden;">
+                                <div style="color: var(--primary); margin-bottom: 10px;">$ primeos --status </div>
+                                <div style="color: var(--secondary);">Sistema: PrimeOS v1.0</div>
+                                <div style="color: var(--secondary);">Kernel: PrimeKernel 5.15.0</div>
+                                <div style="color: var(--secondary);">Uso de RAM: 550MB/4GB (14%)</div>
+                                <div style="color: var(--secondary);">Uso Mínimo de CPU: 1%</div>
+                                <div style="color: var(--secondary);">Tiempo activo: 7d 3h 45m</div>
+                                <div style="color: var(--primary); margin-top: 15px;">$ _</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Características -->
+    <section class="features" id="caracteristicas">
+        <div class="container">
+            <h2>Características Principales</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Alto Rendimiento</h3>
+                    <p>Optimización a nivel de kernel para maximizar la velocidad de ejecución y reducir la latencia del
+                        sistema.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-memory"></i>
+                    </div>
+                    <h3>Uso Eficiente de Memoria</h3>
+                    <p>Consumo mínimo de RAM gracias a algoritmos de gestión de memoria avanzados y servicios esenciales
+                        optimizados.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Kernel Modular</h3>
+                    <p>Arquitectura de kernel modular que permite cargar solo los componentes necesarios para cada
+                        hardware específico.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Seguridad Integrada</h3>
+                    <p>Mecanismos de seguridad a nivel de kernel, incluyendo procesos y protección contra exploits.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>Compatibilidad</h3>
+                    <p>Soporte para una amplia gama de hardware, desde equipos antiguos hasta las últimas tecnologías.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Herramientas de Desarrollo</h3>
+                    <p>Suite completa de herramientas de desarrollo optimizadas para PrimeOS y compilación cruzada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Detalles Técnicos -->
+    <section id="detalles">
+        <div class="container">
+            <h2>Detalles Técnicos</h2>
+            <div class="details-container">
+                <div>
+                    <h3>Arquitectura y Especificaciones</h3>
+
+                    <ul class="specs-list">
+                        <li><strong>Kernel personalizado (PrimeKernel):</strong> Basado en Kernel NT 10.0 con
+                            optimizaciones específicas para reducción de latencia y mejora de la planificación de
+                            procesos.</li>
+                        <li><strong>Sistema operativo modificado:</strong> Optimizado para tener el mejor rendimiento en
+                            hardware de bajo recursos.</li>
+                        <li><strong>Gestor de memoria adaptativo:</strong> Sistema que ajusta automáticamente los
+                            parámetros de memoria según el perfil de uso del sistema.</li>
+                        <li><strong>Arquitectura modular:</strong> Capacidad de cargar y descargar módulos según
+                            necesidades específicas.</li>
+                        <li><strong>Soporte para contenedores ligeros:</strong> Implementación nativa de tecnologías de
+                            contenedorización con sobrecarga mínima.</li>
+                        <li><strong>API de sistema optimizada:</strong> Llamadas al sistema optimizadas para reducir el
+                            tiempo de contexto entre espacio de usuario y kernel.</li>
+                    </ul>
+                </div>
+                <div class="architecture-diagram">
+                    <h3>Arquitectura de PrimeOS</h3>
+                    <div class="diagram">
+                        <div class="layer layer-1">Aplicaciones de Usuario</div>
+                        <div class="layer layer-2">PrimeOS API</div>
+                        <div class="layer layer-3">Servicios del Sistema</div>
+                        <div class="layer layer-4">PrimeKernel (Modular)</div>
+                        <div class="layer layer-5">Controladores de Hardware</div>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 0.9rem; text-align: center;">Arquitectura en capas diseñada
+                        para minimizar la latencia y maximizar la eficiencia</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Descargas -->
+    <section class="downloads" id="descargas">
+        <div class="container">
+            <h2>Descargas</h2>
+            <p>PrimeOS está disponible para diferentes arquitecturas y propósitos. Selecciona la versión que mejor se
+                adapte a tus necesidades.</p>
+
+            <div class="download-options">
+                <div class="download-card featured">
+                    <div class="download-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>PrimeOS Desktop</h3>
+                    <p>Versión completa con entorno gráfico optimizado para uso en estaciones de trabajo y computadoras
+                        personales.</p>
+                    <div class="download-tags">
+                        <span class="tag-arch"><i class="fas fa-microchip"></i> x64</span>
+                        <span class="tag-size"><i class="fas fa-save"></i> 3,60GB</span>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1pziKhlkOrDr5V7-xs7odvXXI_AhC8fpA/view?usp=drive_link"
+                        class="btn">Descargar</a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>PrimeOS Core</h3>
+                    <p>Versión mínima con lo esenciales, ideal para y dispositivos con recursos limitados.</p>
+                    <div class="download-tags">
+                        <span class="tag-arch"><i class="fas fa-microchip"></i> x64</span>
+                        <span class="tag-size"><i class="fas fa-save"></i> 2,80 GB</span>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1kFWEnuNFhuvmALhkg6JUThPAffAJElt-/view?usp=drive_link"
+                        class="btn">Descargar</a>
+                </div>
+            </div>
+            <!-- seccion de requisitos del sistema -->
+            <div class="requirements-container">
+                <h3>Requisitos del Sistema</h3>
+                <div class="requirements-wrapper">
+                    <div class="requirement-col">
+                        <div class="req-header">
+                            <i class="fas fa-desktop"></i>
+                            <h4>Mínimos (PrimeOS Desktop)</h4>
+                        </div>
+                        <ul class="req-list">
+                            <li><i class="fas fa-check-circle"></i> <strong>Procesador:</strong> Dual-core 1.20 GHz</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Memoria RAM:</strong> 4 GB</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Almacenamiento:</strong> 64 GB</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Arquitectura:</strong> x64</li>
+                        </ul>
+                    </div>
+                    <div class="requirement-divider"></div>
+                    <div class="requirement-col">
+                        <div class="req-header">
+                            <i class="fas fa-microchip"></i>
+                            <h4>Recomendados (PrimeOS Core)</h4>
+                        </div>
+                        <ul class="req-list">
+                            <li><i class="fas fa-check-circle"></i> <strong>Procesador:</strong> Single-core 1.10 GHz
+                            </li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Memoria RAM:</strong> 2 GB</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Almacenamiento:</strong> 64 GB</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Gráficos:</strong> Integrados </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Tesis -->
+    <section id="tesis">
+        <div class="container">
+            <h2>Proyecto de Grado</h2>
+            <div class="thesis-content">
+                <div class="thesis-text">
+                    <p>PrimeOS fue desarrollado como parte de mi proyecto de grado, titulado: <strong>"Diseño e
+                            Implementación de un Sistema Operativo Optimizado para Hardware de Bajo y Medio
+                            Rendimiento"</strong>.</p>
+                    <p>El objetivo de la investigación fue crear un sistema operativo que maximice la eficiencia de
+                        recursos sin comprometer la funcionalidad, dirigido especialmente a dispositivos con recursos
+                        limitados y entornos donde el rendimiento es bajo.</p>
+                    <p>La metodología incluyó análisis comparativo de kernels existentes, diseño de algoritmos de
+                        planificación personalizados, implementación de un sistema de archivos optimizado y pruebas
+                        exhaustivas de rendimiento en diferentes configuraciones de hardware.</p>
+                    <p>Los resultados demostraron una mejora del 45-60% en el rendimiento general y una reducción del
+                        80-99% en el consumo de recursos en comparación con sistemas operativos convencionales en
+                        hardware similar.</p>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <a href="https://drive.google.com/file/d/1NvNBvSGUd6BowSVpj-B9LgzQdJQMDYBk/view?usp=drive_link"
+                            class="btn btn-secondary">Ver Documentación Completa</a>
+                        <a href="PrimeOS_Presentation.html" class="btn btn-secondary"><i class="fas fa-play-circle"
+                                style="margin-right: 8px;"></i>Ver Presentación</a>
+                    </div>
+                </div>
+                <div class="thesis-image">
+                    <div>
+                        <div style="font-size: 1.5rem; margin-bottom: 10px;"></div>
+                        <div>PrimeOS: Sistema Operativo Optimizado</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <h2>Contacto</h2>
+            <p>¿Interesado en PrimeOS o en los detalles de mi investigación? No dudes en contactarme para más
+                información, colaboraciones o preguntas técnicas.</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h4>Autor</h4>
+                    <p>Jose Miguel Rondon Nava</p>
+                    <p>Estudiante De 5to Año</p>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h4>Instituto</h4>
+                    <p>UEP "Miguel Acosta Saignes"</p>
+                    <p></p>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>Correo Electrónico</h4>
+                    <p>consultasrprime@gmail.com</p>
+                    <p>Contacto para consultas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">
+                    <p>&copy; 2026 PrimeOS - Sistema Operativo Optimizado. Proyecto de grado desarrollado por Jose
+                        Rondon.</p>
+                    <p>Todos los derechos reservados. <br> Esta página es para fines académicos y de demostración.</p>
+                    <p>@notinegrito</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/JoseRondon16" title="GitHub"><i class="fab fa-github"></i></a>
+
+                    <a href="https://drive.google.com/file/d/1NvNBvSGUd6BowSVpj-B9LgzQdJQMDYBk/view?usp=drive_link"
+                        title="Documentación PDF"><i class="fas fa-file-pdf"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menú móvil
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active')
+                ? '<i class="fas fa-times"></i>'
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Smooth scrolling para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer para animaciones de scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        // Aplicar efecto a las secciones y tarjetas
+        document.querySelectorAll('section:not(.hero), .feature-card, .download-card, .requirement-box').forEach(el => {
+            el.classList.add('scroll-reveal');
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>
