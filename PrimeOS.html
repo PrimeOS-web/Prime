@@ -14,13 +14,11 @@
             --secondary: #00c853;
             --dark: #202124;
             --light: #f8f9fa;
-            --gray: #5f6368;
-            --light-gray: #e8eaed;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gray: #9aa0a6;
+            --transition: all 0.3s ease;
             --border-radius: 12px;
-            --glow: 0 0 20px rgba(26, 115, 232, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
         }
 
         /* Reset y estilos base */
@@ -414,7 +412,7 @@
 
         /* Hero section - PANTALLA COMPLETA */
         .hero {
-            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 50%, #00c853 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1a73e8 50%, #00c853 100%);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             color: white;
@@ -727,10 +725,9 @@
 
         /* About section */
         .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         .about-text p {
@@ -1185,24 +1182,21 @@
 
         /* Thesis info */
         .thesis-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         .thesis-text p {
             margin-bottom: 30px;
             position: relative;
-            padding-left: 20px;
-            border-left: 3px solid transparent;
+            padding: 0 20px;
             transition: var(--transition);
         }
 
         .thesis-text p:hover {
-            border-left-color: var(--primary);
-            padding-left: 30px;
-            background: linear-gradient(90deg, rgba(26, 115, 232, 0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(26, 115, 232, 0.05), transparent);
+            transform: scale(1.02);
         }
 
         .thesis-image {
@@ -1231,8 +1225,8 @@
             background: repeating-linear-gradient(45deg,
                     transparent,
                     transparent 20px,
-                    rgba(255, 255, 255, 0.1) 20px,
-                    rgba(255, 255, 255, 0.1) 40px);
+                    rgba(255, 255, 255, 0.05) 20px,
+                    rgba(255, 255, 255, 0.05) 40px);
             animation: slideDiagonal 10s linear infinite;
         }
 
@@ -1574,7 +1568,7 @@
     <header id="header">
         <div class="container">
             <nav>
-                <div class="logo">
+                <div class="logo" onclick="location.reload()">
                     <i class="fas fa-microchip"></i>
                     <span>PrimeOS</span>
                 </div>
@@ -1587,7 +1581,7 @@
                     <li><a href="#caracteristicas">Características</a></li>
                     <li><a href="#detalles">Detalles Técnicos</a></li>
                     <li><a href="#descargas">Descargas</a></li>
-                    <li><a href="#tesis">Tesis</a></li>
+                    <li><a href="#tesis">Protecto</a></li>
                     <li><a href="#contacto">Contacto</a></li>
                 </ul>
             </nav>
@@ -1599,13 +1593,10 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <div class="logo-hero">
-                        <i class="fas fa-microchip"></i>
-                        <span>PrimeOS</span>
-                    </div>
-                    <h1>Sistema Operativo<br>De Alto Rendimiento</h1>
-                    <p>Diseñado para maximizar la eficiencia de recursos y proporcionar una experiencia fluida en
-                        hardware moderno y antiguo.</p>
+
+                    <h1>Tu PC vieja no está muerta <br> solo tiene el sistema equivocado</h1>
+                    <p>Optimizado para que tu PC deje de arrastrarse y empiece a volar. Una experiencia sin basura,
+                        centrada en lo que realmente importa.</p>
                     <div class="hero-btns">
                         <a href="#descargas" class="btn"><i class="fas fa-download"></i> Descargar PrimeOS</a>
                         <a href="#tesis" class="btn btn-outline">Ver Descripción</a>
@@ -1617,19 +1608,15 @@
                 </div>
                 <div class="hero-visual">
                     <div class="terminal-window">
-                        <div class="terminal-header">
-                            <div class="terminal-btn red"></div>
-                            <div class="terminal-btn yellow"></div>
-                            <div class="terminal-btn green"></div>
-                        </div>
+
                         <div class="terminal-body">
-                            <div class="terminal-line command">$ primeos --status</div>
-                            <div class="terminal-line">Sistema: PrimeOS v1.0</div>
-                            <div class="terminal-line">Kernel: PrimeKernel 5.15.0</div>
+
+                            <div class="terminal-line">Sistema: PrimeOS v1.2</div>
+                            <div class="terminal-line"></div>
                             <div class="terminal-line">Uso de RAM: 550MB/ 2GB (30%)</div>
                             <div class="terminal-line">Uso Mínimo de CPU: 1%</div>
-                            <div class="terminal-line">Tiempo activo: 7d 3h 45m</div>
-                            <div class="terminal-line command blink">$ _</div>
+
+
                         </div>
                     </div>
                     <div class="stats-row">
@@ -1638,11 +1625,11 @@
                             <div class="stat-label">Más Rápido</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">70%</div>
+                            <div class="stat-number">72.5%</div>
                             <div class="stat-label">Menos RAM</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">99%</div>
+                            <div class="stat-number">92%</div>
                             <div class="stat-label">Eficiencia</div>
                         </div>
                     </div>
@@ -1657,44 +1644,17 @@
             <h2>Acerca de PrimeOS</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>PrimeOS es un sistema operativo optimizado.
-                        Este sistema ha sido diseñado en base a la versión de Windows 10 22H2
-                        con un enfoque en la eficiencia de recursos, velocidad de ejecución y estabilidad.</p>
-                    <p>El objetivo principal de PrimeOS es ofrecer una alternativa ligera a los sistemas operativos
-                        convencionales,
-                        optimizando cada capa del software para maximizar el rendimiento en una amplia gama de hardware.
+                    <p>PrimeOS no es solo otra ISO modificada.
+                        Es el resultado de horas obsesionado con el Administrador de Tareas, buscando por qué Windows se
+                        sentía tan pesado.</p>
+                    <p>El objetivo es darte una alternativa real,
+                        donde he pulido cada rincón del sistema para que corra rápido incluso en máquinas que dabas por
+                        perdidas.
                     </p>
-                    <p>He implementado algoritmos de planificación personalizados, un sistema de archivos optimizado y
+                    <p>He desarrollado funciones de planificación personalizadas, un sistema de archivos optimizado y
                         un kernel modular que permite una adaptación precisa a las necesidades específicas del usuario.
                     </p>
                     <a href="#detalles" class="btn">Ver Detalles Técnicos</a>
-                </div>
-                <div class="about-image">
-                    <div class="os-preview">
-                        <div style="display: flex; flex-direction: column; height: 100%;">
-                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
-                                <div
-                                    style="width: 20px; height: 20px; background: #ff5f56; border-radius: 50%; margin-right: 10px; transition: all 0.3s;">
-                                </div>
-                                <div
-                                    style="width: 20px; height: 20px; background: #ffbd2e; border-radius: 50%; margin-right: 10px; transition: all 0.3s;">
-                                </div>
-                                <div
-                                    style="width: 20px; height: 20px; background: #27ca3f; border-radius: 50%; transition: all 0.3s;">
-                                </div>
-                            </div>
-                            <div
-                                style="flex-grow: 1; background: #f5f5f5; border-radius: 5px; padding: 15px; font-family: monospace; overflow: hidden;">
-                                <div style="color: var(--primary); margin-bottom: 10px;">$ primeos --status </div>
-                                <div style="color: var(--secondary);">Sistema: PrimeOS v1.0</div>
-                                <div style="color: var(--secondary);">Kernel: PrimeKernel 5.15.0</div>
-                                <div style="color: var(--secondary);">Uso de RAM: 550MB/4GB (14%)</div>
-                                <div style="color: var(--secondary);">Uso Mínimo de CPU: 1%</div>
-                                <div style="color: var(--secondary);">Tiempo activo: 7d 3h 45m</div>
-                                <div style="color: var(--primary); margin-top: 15px;">$ _</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1718,7 +1678,7 @@
                         <i class="fas fa-memory"></i>
                     </div>
                     <h3>Uso Eficiente de Memoria</h3>
-                    <p>Consumo mínimo de RAM gracias a algoritmos de gestión de memoria avanzados y servicios esenciales
+                    <p>Consumo mínimo de RAM gracias a técnicas de gestión de memoria eficientes y servicios esenciales
                         optimizados.</p>
                 </div>
                 <div class="feature-card">
@@ -1788,8 +1748,8 @@
                         <div class="layer layer-4">PrimeKernel (Modular)</div>
                         <div class="layer layer-5">Controladores de Hardware</div>
                     </div>
-                    <p style="margin-top: 20px; font-size: 0.9rem; text-align: center;">Arquitectura en capas diseñada
-                        para minimizar la latencia y maximizar la eficiencia</p>
+                    <p style="margin-top: 20px; font-size: 0.9rem; text-align: center;">Arquitectura diseñada en capas
+                        para mejorar la eficiencia</p>
                 </div>
             </div>
         </div>
@@ -1799,15 +1759,15 @@
     <section class="downloads" id="descargas">
         <div class="container">
             <h2>Descargas</h2>
-            <p>PrimeOS está disponible para diferentes arquitecturas y propósitos. Selecciona la versión que mejor se
-                adapte a tus necesidades.</p>
+            <p>PrimeOS está disponible. Selecciona la versión que mejor se
+                adapte a ti.</p>
 
             <div class="download-options">
                 <div class="download-card featured">
                     <div class="download-icon">
                         <i class="fas fa-desktop"></i>
                     </div>
-                    <h3>PrimeOS Desktop</h3>
+                    <h3>PrimeOS v1.3</h3>
                     <p>Versión completa con entorno gráfico optimizado para uso en estaciones de trabajo y computadoras
                         personales.</p>
                     <div class="download-tags">
@@ -1822,7 +1782,7 @@
                     <div class="download-icon">
                         <i class="fas fa-microchip"></i>
                     </div>
-                    <h3>PrimeOS Core</h3>
+                    <h3>PrimeOS 1.2</h3>
                     <p>Versión mínima con lo esenciales, ideal para y dispositivos con recursos limitados.</p>
                     <div class="download-tags">
                         <span class="tag-arch"><i class="fas fa-microchip"></i> x64</span>
@@ -1839,7 +1799,7 @@
                     <div class="requirement-col">
                         <div class="req-header">
                             <i class="fas fa-desktop"></i>
-                            <h4>Mínimos (PrimeOS Desktop)</h4>
+                            <h4>Recomendados (PrimeOS v1.3)</h4>
                         </div>
                         <ul class="req-list">
                             <li><i class="fas fa-check-circle"></i> <strong>Procesador:</strong> Dual-core 1.20 GHz</li>
@@ -1852,13 +1812,13 @@
                     <div class="requirement-col">
                         <div class="req-header">
                             <i class="fas fa-microchip"></i>
-                            <h4>Recomendados (PrimeOS Core)</h4>
+                            <h4>Mínimos (PrimeOS v1.2)</h4>
                         </div>
                         <ul class="req-list">
                             <li><i class="fas fa-check-circle"></i> <strong>Procesador:</strong> Single-core 1.10 GHz
                             </li>
                             <li><i class="fas fa-check-circle"></i> <strong>Memoria RAM:</strong> 2 GB</li>
-                            <li><i class="fas fa-check-circle"></i> <strong>Almacenamiento:</strong> 64 GB</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Almacenamiento:</strong> 40 GB</li>
                             <li><i class="fas fa-check-circle"></i> <strong>Gráficos:</strong> Integrados </li>
                         </ul>
                     </div>
@@ -1867,7 +1827,7 @@
         </div>
     </section>
 
-    <!-- Sección Tesis -->
+    <!-- Sección Proyecto de grado -->
     <section id="tesis">
         <div class="container">
             <h2>Proyecto de Grado</h2>
@@ -1877,28 +1837,17 @@
                             Implementación de un Sistema Operativo Optimizado para Hardware de Bajo y Medio
                             Rendimiento"</strong>.</p>
                     <p>El objetivo de la investigación fue crear un sistema operativo que maximice la eficiencia de
-                        recursos sin comprometer la funcionalidad, dirigido especialmente a dispositivos con recursos
-                        limitados y entornos donde el rendimiento es bajo.</p>
-                    <p>La metodología incluyó análisis comparativo de kernels existentes, diseño de algoritmos de
-                        planificación personalizados, implementación de un sistema de archivos optimizado y pruebas
-                        exhaustivas de rendimiento en diferentes configuraciones de hardware.</p>
-                    <p>Los resultados demostraron una mejora del 45-60% en el rendimiento general y una reducción del
-                        80-99% en el consumo de recursos en comparación con sistemas operativos convencionales en
+                        recursos sin comprometer la funcionalidad</p>
+                    <p>Me cansé de que Windows 10 fuera lento en mi laptop de estudio, así que decidí crear mi propio
+                        sistema operativo. Este proyecto es el resultado de 6 meses de pruebas y errores.</p>
+                    <p>Los resultados demostraron una mejora del <br>45-60% en el rendimiento general y una reducción
+                        del 80-95% en el consumo de recursos en comparación con sistemas operativos estándar en
                         hardware similar.</p>
-                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                        <a href="https://drive.google.com/file/d/1NvNBvSGUd6BowSVpj-B9LgzQdJQMDYBk/view?usp=drive_link"
-                            class="btn btn-secondary">Ver Documentación Completa</a>
-                        <a href="PrimeOS_Presentation.html" class="btn btn-secondary"><i class="fas fa-play-circle"
-                                style="margin-right: 8px;"></i>Ver Presentación</a>
-                    </div>
-                </div>
-                <div class="thesis-image">
-                    <div>
-                        <div style="font-size: 1.5rem; margin-bottom: 10px;"></div>
-                        <div>PrimeOS: Sistema Operativo Optimizado</div>
-                    </div>
+                    <a href="PrimeOS_Presentation.html" class="btn btn-secondary"><i class="fas fa-play-circle"
+                            style="margin-right: 8px;"></i>Ver Presentación</a>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
